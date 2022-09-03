@@ -1,6 +1,6 @@
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { cyan } from 'picocolors'
+import pc from 'picocolors'
 
 const program = yargs(hideBin(process.argv))
 
@@ -28,7 +28,7 @@ export const cli = program
 	.alias('v', 'version')
 	.alias('h', 'help')
 
-	.usage(cyan('$0 <command> [options]'))
+	.usage(pc.cyan('$0 <command> [options]'))
 	.example('create index.ts', 'Basic usage')
 	.example('', '')
 	.example('create src/index.ts', 'Creating a nested file')
