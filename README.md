@@ -27,7 +27,7 @@ create src/index.ts
 ```
 
 ```bash
-create index.html style.css app.js`
+create index.html style.css app.js
 ```
 
 ```bash

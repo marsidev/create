@@ -15,7 +15,9 @@
 	"bugs": "https://github.com/marsidev/create/issues",
 	"keywords": [
 		"cli",
-		"create",
+		"command-line",
+		"fs",
+		"filesystem",
 		"touch"
 	],
 	"bin": {
