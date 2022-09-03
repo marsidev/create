@@ -9,7 +9,7 @@ export const cli = program
 	.option('author', {
 		alias: 'a',
 		type: 'boolean',
-		describe: 'Show the author\'s info'
+		describe: 'Show info about the author of this library'
 	})
 	.option('base', {
 		alias: 'b',
