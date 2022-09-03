@@ -1,7 +1,7 @@
 {
 	"name": "@marsidev/create",
 	"type": "module",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"packageManager": "pnpm@7.9.0",
 	"private": false,
 	"description": "Create multiple files from your command line",
