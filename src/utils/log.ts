@@ -1,4 +1,5 @@
-import { blue, bold, green, red, yellow } from 'picocolors'
+import pc from 'picocolors'
+const { blue, bold, green, red, yellow } = pc
 
 export interface LogOptions {
 	silent?: boolean

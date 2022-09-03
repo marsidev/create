@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 import path from 'path'
-import { cyan } from 'picocolors'
+import pc from 'picocolors'
 import { createEmptyFile, ensureDir, fileExists, validFilename } from './utils/fs'
 import { cli } from './utils/cli'
 import { type LogOptions, error, log, success, warn } from './utils/log'
 
 const main = () => {
 	if (Object.keys(cli).length <= 3 && cli._.length === 0) {
-		const cmd = cyan(`${cli.$0} --help`)
+		const cmd = pc.cyan(`${cli.$0} --help`)
 		warn(`No filenames provided. Use the command "${cmd}" for help`)
 		return
 	}
@@ -20,9 +20,9 @@ const main = () => {
 
 	if (cli.author) {
 		const options: LogOptions = { ...logOptions, silent: false }
-		log(`Name: ${cyan('Luis Marsiglia')}`, options)
-		log(`GitHub: ${cyan('https://github.com/marsidev')}`, options)
-		log(`Twitter: ${cyan('https://twitter.com/marsigliacr')}`, options)
+		log(`Name: ${pc.cyan('Luis Marsiglia')}`, options)
+		log(`GitHub: ${pc.cyan('https://github.com/marsidev')}`, options)
+		log(`Twitter: ${pc.cyan('https://twitter.com/marsigliacr')}`, options)
 		return
 	}
 
@@ -41,12 +41,12 @@ const main = () => {
 		const parsed = path.parse(filenamePath)
 
 		if (fileExists(filename)) {
-			warn(`File ${cyan(filename)} already exists`, logOptions)
+			warn(`File ${pc.cyan(filename)} already exists`, logOptions)
 			return
 		}
 
 		if (!validFilename(parsed.base)) {
-			error(`${cyan(parsed.base)} is not a valid filename`, logOptions)
+			error(`${pc.cyan(parsed.base)} is not a valid filename`, logOptions)
 			return
 		}
 
@@ -54,9 +54,9 @@ const main = () => {
 
 		try {
 			createEmptyFile(filenamePath)
-			success(`File ${cyan(filenamePath)} created`, logOptions)
+			success(`File ${pc.cyan(filenamePath)} created`, logOptions)
 		} catch (e) {
-			error(`Something went wrong while creating the file ${cyan(filename)}`, logOptions)
+			error(`Something went wrong while creating the file ${pc.cyan(filename)}`, logOptions)
 			console.log(e)
 		}
 	}
