@@ -1,15 +1,32 @@
-# pkg-name
-
-[![NPM version](https://img.shields.io/npm/v/pkg-name?color=a1b858&label=)](https://www.npmjs.com/package/pkg-name)
-
-## Sponsors
+<h1 align="center">
+  <p align="center">@marsidev/create</p>
+	<small>Create multiple files from your command line.</small>
+</h1>
 
 <p align="center">
-  <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
-    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
-  </a>
+	<a href="https://www.npmjs.com/package/@marsidev/create"><img src="https://img.shields.io/npm/v/@marsidev/create.svg?style=flat" alt="npm version"></a>
+	<a href="https://github.com/marsidev/create/actions/workflows/ci.yaml"><img src="https://github.com/marsidev/create/actions/workflows/ci.yaml/badge.svg" alt="GitHub Actions status"></a>
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
+  <a href="LICENSE.md"><img src="https://img.shields.io/github/license/sourcerer-io/hall-of-fame.svg?colorB=ff0000"></a>
+	<a href="https://twitter.com/marsigliacr"><img src="https://img.shields.io/twitter/follow/marsigliacr.svg?style=social" alt="Twitter Follow" /></a>
 </p>
 
-## License
+## Installation
+`$ npm install -g @marsidev/create`
 
-[MIT](./LICENSE) License © 2022 [Anthony Fu](https://github.com/antfu)
+## Usage
+`create <files> [options]`
+
+## Examples
+`create index.ts`
+
+`create src/index.ts`
+
+`create index.html style.css app.js`
+
+`create src/index.html src/styles/style.css src/app.js`
+
+`create --base src/components Navbar.tsx Footer.tsx`
+
+## License
+[MIT](./LICENSE) License © 2022 [Luis Marsiglia](https://github.com/marsidev)

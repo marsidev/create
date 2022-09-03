@@ -1,64 +1,82 @@
 {
-  "name": "pkg-name",
-  "type": "module",
-  "version": "0.0.0",
-  "packageManager": "pnpm@7.9.0",
-  "description": "",
-  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
-  "license": "MIT",
-  "funding": "https://github.com/sponsors/antfu",
-  "homepage": "https://github.com/antfu/pkg-name#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/antfu/pkg-name.git"
-  },
-  "bugs": "https://github.com/antfu/pkg-name/issues",
-  "keywords": [],
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
-    }
-  },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./dist/index.d.ts"
-      ]
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "unbuild",
-    "dev": "unbuild --stub",
-    "lint": "eslint .",
-    "prepublishOnly": "nr build",
-    "release": "bumpp && npm publish",
-    "start": "esno src/index.ts",
-    "test": "vitest",
-    "typecheck": "tsc --noEmit"
-  },
-  "devDependencies": {
-    "@antfu/eslint-config": "^0.26.1",
-    "@antfu/ni": "^0.17.2",
-    "@antfu/utils": "^0.5.2",
-    "@types/node": "^18.7.5",
-    "bumpp": "^8.2.1",
-    "eslint": "^8.22.0",
-    "esno": "^0.16.3",
-    "pnpm": "^7.9.0",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.7.4",
-    "unbuild": "^0.8.8",
-    "vite": "^3.0.7",
-    "vitest": "^0.22.0"
-  }
+	"name": "@marsidev/create",
+	"type": "module",
+	"version": "0.0.1",
+	"packageManager": "pnpm@7.9.0",
+	"private": false,
+	"description": "Create multiple files from your command line",
+	"author": "Luis Marsiglia <marsiglia.business@gmail.com>",
+	"license": "MIT",
+	"homepage": "https://github.com/marsidev/create#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/marsidev/create.git"
+	},
+	"bugs": "https://github.com/marsidev/create/issues",
+	"keywords": [
+		"cli",
+		"create",
+		"touch"
+	],
+	"bin": {
+		"create": "./dist/index.mjs"
+	},
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"require": "./dist/index.cjs",
+			"import": "./dist/index.mjs"
+		}
+	},
+	"main": "./dist/index.mjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "unbuild",
+		"dev": "unbuild --stub",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"prepublishOnly": "nr build",
+		"release": "bumpp && npm publish",
+		"start": "esno src/index.ts",
+		"test": "vitest",
+		"typecheck": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"@antfu/ni": "^0.17.2",
+		"@antfu/utils": "^0.5.2",
+		"@types/node": "^18.7.5",
+		"@types/yargs": "^17.0.12",
+		"@typescript-eslint/eslint-plugin": "^5.33.0",
+		"@typescript-eslint/parser": "^5.33.0",
+		"bumpp": "^8.2.1",
+		"eslint": "^8.22.0",
+		"eslint-config-marsi": "^1.1.1",
+		"eslint-config-standard": "^17.0.0",
+		"eslint-import-resolver-typescript": "^3.4.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-n": "^15.2.4",
+		"eslint-plugin-promise": "^6.0.0",
+		"esno": "^0.16.3",
+		"picocolors": "^1.0.0",
+		"pnpm": "^7.9.0",
+		"rimraf": "^3.0.2",
+		"typescript": "^4.7.4",
+		"unbuild": "^0.8.8",
+		"yargs": "^17.5.1"
+	},
+	"pnpm": {
+		"peerDependencyRules": {
+			"ignoreMissing": [
+				"eslint-plugin-react"
+			]
+		}
+	},
+	"engines": {
+		"node": ">=14"
+	}
 }
