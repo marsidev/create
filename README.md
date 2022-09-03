@@ -12,21 +12,33 @@
 </p>
 
 ## Installation
-`$ npm install -g @marsidev/create`
+```bash
+npm install -g @marsidev/create
+```
 
 ## Usage
 `create <files> [options]`
 
 ## Examples
-`create index.ts`
+```bash
+create index.ts
+```
 
-`create src/index.ts`
+```bash
+create src/index.ts
+```
 
-`create index.html style.css app.js`
+```bash
+create index.html style.css app.js`
+```
 
-`create src/index.html src/styles/style.css src/app.js`
+```bash
+create src/index.html src/styles/style.css src/app.js
+```
 
-`create --base src/components Navbar.tsx Footer.tsx`
+```bash
+create --base src/components Navbar.tsx Footer.tsx
+```
 
 ## License
 [MIT](./LICENSE) License © 2022 [Luis Marsiglia](https://github.com/marsidev)

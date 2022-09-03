@@ -5,9 +5,6 @@ export default defineBuildConfig({
 	declaration: true,
 	clean: true,
 	rollup: {
-		emitCJS: true,
-		esbuild: {
-			minify: true
-		}
+		emitCJS: true
 	}
 })

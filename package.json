@@ -1,7 +1,7 @@
 {
 	"name": "@marsidev/create",
 	"type": "module",
-	"version": "0.0.1",
+	"version": "0.0.0",
 	"packageManager": "pnpm@7.9.0",
 	"private": false,
 	"description": "Create multiple files from your command line",
@@ -62,12 +62,14 @@
 		"eslint-plugin-n": "^15.2.4",
 		"eslint-plugin-promise": "^6.0.0",
 		"esno": "^0.16.3",
-		"picocolors": "^1.0.0",
 		"pnpm": "^7.9.0",
 		"rimraf": "^3.0.2",
 		"typescript": "^4.7.4",
-		"unbuild": "^0.8.8",
-		"yargs": "^17.5.1"
+		"unbuild": "^0.8.8"
+	},
+	"dependencies": {
+		"yargs": "^17.5.1",
+		"picocolors": "^1.0.0"
 	},
 	"pnpm": {
 		"peerDependencyRules": {
