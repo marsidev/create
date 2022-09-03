@@ -1,19 +1,12 @@
+import type { LogFn, LogOptions } from '../types'
 import pc from 'picocolors'
 const { blue, bold, green, red, yellow } = pc
-
-export interface LogOptions {
-	silent?: boolean
-	bold?: boolean
-	noColors?: boolean
-}
 
 const defaultOptions: LogOptions = {
 	silent: false,
 	bold: true,
 	noColors: false
 }
-
-type LogFn = (msg: string, opts?: LogOptions) => void
 
 export const log: LogFn = (msg, opts = defaultOptions) => {
 	if (opts.silent) return
