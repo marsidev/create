@@ -1,10 +1,10 @@
 import type { LogOptions } from './types'
-import path from 'path'
+import { join, parse } from 'path'
 import pc from 'picocolors'
 import {
 	createEmptyFile,
+	dirExists,
 	ensureDir,
-	fileExists,
 	validFilename
 } from './utils/fs'
 import { cli } from './utils/cli'
@@ -36,15 +36,15 @@ export const init = () => {
 	})
 
 	function createFile(filename: string) {
-		let filenamePath = path.join(filename)
+		let filenamePath = join(filename)
 
 		if (cli.base) {
-			filenamePath = path.join(cli.base, filename)
+			filenamePath = join(cli.base, filename)
 		}
 
-		const parsed = path.parse(filenamePath)
+		const parsed = parse(filenamePath)
 
-		if (fileExists(filename)) {
+		if (dirExists(filename)) {
 			warn(`File ${pc.cyan(filename)} already exists`, logOptions)
 			return
 		}

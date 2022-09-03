@@ -8,12 +8,15 @@ const defaultOptions: LogOptions = {
 	noColors: false
 }
 
+export const removeColors = (msg: string) => {
+	return msg.replace(/\u001b[^m]*?m/g, '')
+}
+
 export const log: LogFn = (msg, opts = defaultOptions) => {
 	if (opts.silent) return
 
 	if (opts.noColors) {
-		// eslint-disable-next-line no-control-regex
-		return console.log(msg.replace(/\u001b[^m]*?m/g, ''))
+		return console.log(removeColors(msg))
 	}
 
 	if (opts.bold || opts.bold === undefined) {

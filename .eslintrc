@@ -1,3 +1,6 @@
 {
-	"extends": ["marsi/ts"]
+	"extends": ["marsi/ts"],
+	"rules": {
+		"no-control-regex": "off"
+	}
 }
