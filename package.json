@@ -72,7 +72,6 @@
 		"vitest": "^0.22.1"
 	},
 	"dependencies": {
-		"commander": "^9.4.0",
 		"picocolors": "^1.0.0",
 		"yargs": "^17.5.1"
 	},
