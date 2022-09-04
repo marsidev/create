@@ -4,10 +4,13 @@ import { readdirSync } from 'node:fs'
 import { execa } from 'execa'
 import { remove } from '../src/utils/fs'
 
-const CLI_PATH = join(__dirname, '../dist/index.mjs')
+// const CLI_PATH = join(__dirname, '../dist/index.mjs')
+// const CLI_PATH = join(__dirname, '../src/index.ts')
 
 export const run = async (args: string[], options: SyncOptions = {}) => {
-	return await execa(`node ${CLI_PATH} ${args.join(' ')}`, options)
+	// return await execa(`node "${CLI_PATH}" ${args.join(' ')}`, options)
+	// return await execa(`node_modules/.bin/tsx "${CLI_PATH}" ${args.join(' ')}`, options)
+	return await execa(`node_modules/.bin/tsx src/index.ts ${args.join(' ')}`, options)
 }
 
 export const cleanup = () => {
