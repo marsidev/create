@@ -1,61 +1,8 @@
 import { join, parse } from 'node:path'
-import { randomBytes } from 'crypto'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import pkgJson from '../package.json'
 import { createEmptyFile, dirExists, remove } from '../src/utils/fs'
 import { removeColors } from '../src/utils/log'
 import { cleanup, cliOptions as opts, run } from './helpers'
-
-describe('basic commands', () => {
-	it('should returns expected message when no args are passed', async () => {
-		const { stdout } = await run([])
-		expect(stdout).toContain('No filenames or parameters were provided.')
-	})
-
-	it.each(opts.author.cmd)(opts.author.desc, async cmd => {
-		const { stdout } = await run([cmd])
-		expect(stdout).toContain('Marsiglia')
-	})
-
-	it('should returns color codes by default', async () => {
-		const { stdout } = await run(['--author'])
-		expect(stdout).toContain('\u001b')
-	})
-
-	it('should not returns color codes when executed with --nocolors', async () => {
-		const { stdout } = await run(['--author', '--nocolors'])
-		expect(stdout).not.toContain('\u001b')
-	})
-
-	it.each(opts.version.cmd)(opts.version.desc, async cmd => {
-		const { stdout } = await run([cmd])
-		expect(stdout).toContain(pkgJson.version)
-	})
-
-	it.each(opts.help.cmd)(opts.help.desc, async cmd => {
-		const { stdout } = await run([cmd])
-		expect(stdout).toContain('create <file(s)> [options]')
-		expect(stdout).toContain('-a, --author')
-		expect(stdout).toContain('-b, --base')
-		expect(stdout).toContain('-s, --silent')
-		expect(stdout).toContain('--nocolors')
-		expect(stdout).toContain('-v, --version')
-		expect(stdout).toContain('-h, --help')
-		expect(stdout).toContain('Basic usage')
-		expect(stdout).toContain('Creating multiple files')
-		expect(stdout).toContain('Usage with option "base"')
-	})
-
-	it('should returns proper error message when using --base option with no filenames', async () => {
-		const { stdout } = await run(['--base'])
-		expect(stdout).toContain('You used "base" option but no filenames were provided')
-	})
-
-	it('should returns proper error message when using unknown parameter', async () => {
-		const { stdout } = await run(['--invalid'])
-		expect(stdout).toContain('You provided unknown parameters')
-	})
-})
 
 describe('creating files', () => {
 	beforeAll(() => cleanup())
@@ -152,22 +99,5 @@ describe('creating files', () => {
 		expect(removeColors(stdout)).toContain(`File ${file} already exists`)
 
 		remove(file)
-	})
-
-	it('shows a proper error if a non valid filename is provided', async () => {
-		const files = ['test-gen__?index.ts']
-		const [file] = files
-
-		const { stdout } = await run(files)
-		expect(removeColors(stdout)).toContain(`${file} is not a valid filename`)
-		expect(dirExists(file)).toBe(false)
-	})
-
-	it('shows a proper error if the filename is too long', async () => {
-		const file = randomBytes(128).toString('hex') // each byte encoded to hex is 2 characters
-
-		const { stdout } = await run([file])
-		expect(removeColors(stdout)).toContain('Filename is too long!')
-		expect(dirExists(file)).toBe(false)
 	})
 })
