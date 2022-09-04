@@ -1,69 +1,20 @@
 import type { LogOptions } from './types'
 import { join, parse } from 'node:path'
 import pc from 'picocolors'
-import {
-	createEmptyFile,
-	dirExists,
-	ensureDir,
-	validFilename
-} from './utils/fs'
+import { createEmptyFile, dirExists, ensureDir, validFilename } from './utils/fs'
 import { cli } from './utils/cli'
-import { currentVersion, requiredVersion, validNodeVersion } from './utils/node'
-import { error, log, success, warn } from './utils/log'
+import { error, success, warn } from './utils/log'
+import resolved from './utils/resolve-command'
 
 export const init = () => {
-	if (!validNodeVersion()) {
-		error(`You are running Node ${currentVersion}.\nThis package requires Node ${requiredVersion} or higher.\nPlease update your version of Node.`)
-		return
-	}
-
-	const cliOptionKeys = Object.keys(cli)
-	const thereIsFiles = cli._.length > 0
-	const thereIsParams = cliOptionKeys.length > 2
-
-	console.log(cli)
-	console.log(cliOptionKeys)
+	if (resolved()) return
 
 	const logOptions: LogOptions = {
 		silent: cli.silent,
 		noColors: cli.nocolors
 	}
 
-	if (cli.author) {
-		// $ create --author
-		const options: LogOptions = { ...logOptions, silent: false }
-		log(`Name: ${pc.cyan('Luis Marsiglia')}`, options)
-		log(`GitHub: ${pc.cyan('https://github.com/marsidev')}`, options)
-		log(`Twitter: ${pc.cyan('https://twitter.com/marsigliacr')}`, options)
-		return
-	}
-
-	if (cliOptionKeys.includes('base') && !thereIsFiles) {
-		// $ create --base
-		const cmd = pc.cyan(`${cli.$0} --help`)
-		const expected = pc.cyan('create --base {basePath} file1 file2')
-		warn(
-			`You used "base" option but no filenames were provided\nExpected syntax is ${expected}\nUse the command "${cmd}" for more help`
-		)
-		return
-	}
-
-	if (!thereIsParams && !thereIsFiles) {
-		// $ create
-		const cmd = pc.cyan(`${cli.$0} --help`)
-		warn(`No filenames or parameters were provided. Use the command "${cmd}" for help`)
-		return
-	}
-
-	if (thereIsParams && !cli.base && !thereIsFiles) {
-		// create --invalid
-		const cmd = pc.cyan(`${cli.$0} --help`)
-		warn(`You provided unknown parameters. Use the command "${cmd}" for help`)
-		return
-	}
-
-	const files = cli._
-	files.forEach(file => {
+	cli._.forEach(file => {
 		createFile(file.toString())
 	})
 
