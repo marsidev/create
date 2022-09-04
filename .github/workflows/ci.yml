@@ -61,19 +61,12 @@ jobs:
 
     strategy:
       matrix:
-        node: [14.x, 15.x, 16.x, 17.x, 18.x]
+        node: [14.x, 15.x, 16.x, 16.x, 18.x]
         os: [ubuntu-latest, windows-latest, macos-latest]
       fail-fast: false
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      
-      - name: Git Setting
-        run: |
-          git config --global user.name  CI
-          git config --global user.email dummy@example.com
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
