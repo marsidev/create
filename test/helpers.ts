@@ -1,16 +1,32 @@
 import type { SyncOptions } from 'execa'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 import { readdirSync } from 'node:fs'
 import { execa } from 'execa'
 import { remove } from '../src/utils/fs'
+import pkgJson from '../package.json'
 
 // const CLI_PATH = join(__dirname, '../dist/index.mjs')
-// const CLI_PATH = join(__dirname, '../src/index.ts')
+const PACKAGE_ROOT = resolve(__dirname, '..')
+const CLI_PATH = resolve(PACKAGE_ROOT, pkgJson.bin.create)
 
 export const run = async (args: string[], options: SyncOptions = {}) => {
 	// return await execa(`node "${CLI_PATH}" ${args.join(' ')}`, options)
 	// return await execa(`node_modules/.bin/tsx "${CLI_PATH}" ${args.join(' ')}`, options)
-	return await execa(`tsx . ${args.join(' ')}`, options)
+
+	// return await execa(`tsx . ${args.join(' ')}`, {
+	// 	...options,
+	// 	cwd: PACKAGE_ROOT
+	// })
+
+	// return await execa(`node ./dist/index.mjs ${args.join(' ')}`, {
+	// 	...options,
+	// 	cwd: PACKAGE_ROOT
+	// })
+
+	return await execa(`node "${CLI_PATH}" ${args.join(' ')}`, {
+		...options,
+		cwd: PACKAGE_ROOT
+	})
 }
 
 export const cleanup = () => {
