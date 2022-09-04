@@ -8,9 +8,15 @@ import {
 	validFilename
 } from './utils/fs'
 import { cli } from './utils/cli'
+import { currentVersion, requiredVersion, validNodeVersion } from './utils/node'
 import { error, log, success, warn } from './utils/log'
 
 export const init = () => {
+	if (!validNodeVersion()) {
+		error(`You are running Node ${currentVersion}.\nThis package requires Node ${requiredVersion} or higher.\nPlease update your version of Node.`)
+		return
+	}
+
 	if (Object.keys(cli).length <= 3 && cli._.length === 0) {
 		const cmd = pc.cyan(`${cli.$0} --help`)
 		warn(`No filenames provided. Use the command "${cmd}" for help`)
