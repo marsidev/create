@@ -7,8 +7,7 @@ import {
 	ensureDir,
 	validFilename
 } from './utils/fs'
-// import { cli } from './utils/cli'
-import commands from './utils/cmd'
+import { cli } from './utils/cli'
 import { currentVersion, requiredVersion, validNodeVersion } from './utils/node'
 import { error, log, success, warn } from './utils/log'
 
@@ -18,20 +17,18 @@ export const init = () => {
 		return
 	}
 
-	const options = commands.opts()
-
-	if (Object.keys(options).length === 0 && commands.args.length === 0) {
-		const cmd = pc.cyan('create --help')
+	if (Object.keys(cli).length <= 3 && cli._.length === 0) {
+		const cmd = pc.cyan(`${cli.$0} --help`)
 		warn(`No filenames provided. Use the command "${cmd}" for help`)
 		return
 	}
 
 	const logOptions: LogOptions = {
-		silent: options.silent,
-		noColors: options.nocolors
+		silent: cli.silent,
+		noColors: cli.nocolors
 	}
 
-	if (options.author) {
+	if (cli.author) {
 		const options: LogOptions = { ...logOptions, silent: false }
 		log(`Name: ${pc.cyan('Luis Marsiglia')}`, options)
 		log(`GitHub: ${pc.cyan('https://github.com/marsidev')}`, options)
@@ -39,7 +36,7 @@ export const init = () => {
 		return
 	}
 
-	const files = commands.args
+	const files = cli._
 	files.forEach(file => {
 		createFile(file.toString())
 	})
@@ -47,8 +44,8 @@ export const init = () => {
 	function createFile(filename: string) {
 		let filenamePath = join(filename)
 
-		if (options.base) {
-			filenamePath = join(options.base, filename)
+		if (cli.base) {
+			filenamePath = join(cli.base, filename)
 		}
 
 		const parsed = parse(filenamePath)

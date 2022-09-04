@@ -53,7 +53,7 @@ describe('basic commands', () => {
 		'should returns current version when executed with %s',
 		async cmd => {
 			const { stdout } = await run([cmd])
-			expect(stdout).toBe(pkgJson.version)
+			expect(stdout).toContain(pkgJson.version)
 		}
 	)
 
@@ -61,7 +61,7 @@ describe('basic commands', () => {
 		'should returns the available options when executed with %s',
 		async cmd => {
 			const { stdout } = await run([cmd])
-			expect(stdout).toContain('create <command> [options]')
+			expect(stdout).toContain('create [options]')
 			expect(stdout).toContain('-a, --author')
 			expect(stdout).toContain('-b, --base')
 			expect(stdout).toContain('-s, --silent')
