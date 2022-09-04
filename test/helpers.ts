@@ -10,7 +10,7 @@ import { remove } from '../src/utils/fs'
 export const run = async (args: string[], options: SyncOptions = {}) => {
 	// return await execa(`node "${CLI_PATH}" ${args.join(' ')}`, options)
 	// return await execa(`node_modules/.bin/tsx "${CLI_PATH}" ${args.join(' ')}`, options)
-	return await execa(`node_modules/.bin/tsx src/index.ts ${args.join(' ')}`, options)
+	return await execa(`./node_modules/.bin/tsx ./src/index.ts ${args.join(' ')}`, options)
 }
 
 export const cleanup = () => {
