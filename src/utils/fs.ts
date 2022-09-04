@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs'
+import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 
 export const ensureDir = (path: string) => {
 	mkdirSync(path, { recursive: true })

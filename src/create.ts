@@ -1,5 +1,5 @@
 import type { LogOptions } from './types'
-import { join, parse } from 'path'
+import { join, parse } from 'node:path'
 import pc from 'picocolors'
 import {
 	createEmptyFile,
@@ -43,6 +43,11 @@ export const init = () => {
 		}
 
 		const parsed = parse(filenamePath)
+
+		if (filename.length > 255) {
+			error('Filename is too long!', logOptions)
+			return
+		}
 
 		if (dirExists(filename)) {
 			warn(`File ${pc.cyan(filename)} already exists`, logOptions)

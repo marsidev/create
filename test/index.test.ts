@@ -1,6 +1,7 @@
 import type { SyncOptions } from 'execa'
 import { join, parse } from 'node:path'
 import { readdirSync } from 'node:fs'
+import { randomBytes } from 'crypto'
 import { afterAll, beforeAll, describe, expect, it, test } from 'vitest'
 import { execa } from 'execa'
 import pkgJson from '../package.json'
@@ -185,6 +186,14 @@ describe('creating files', () => {
 
 		const { stdout } = await run(files)
 		expect(removeColors(stdout)).toContain(`${file} is not a valid filename`)
+		expect(dirExists(file)).toBe(false)
+	})
+
+	it('shows a proper error if the filename is too long', async () => {
+		const file = randomBytes(128).toString('hex') // each byte encoded to hex is 2 characters
+
+		const { stdout } = await run([file])
+		expect(removeColors(stdout)).toContain('Filename is too long!')
 		expect(dirExists(file)).toBe(false)
 	})
 })
