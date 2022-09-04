@@ -17,11 +17,12 @@ export const init = () => {
 		return
 	}
 
-	if (Object.keys(cli).length <= 3 && cli._.length === 0) {
-		const cmd = pc.cyan(`${cli.$0} --help`)
-		warn(`No filenames provided. Use the command "${cmd}" for help`)
-		return
-	}
+	const cliOptionKeys = Object.keys(cli)
+	const thereIsFiles = cli._.length > 0
+	const thereIsParams = cliOptionKeys.length > 2
+
+	console.log(cli)
+	console.log(cliOptionKeys)
 
 	const logOptions: LogOptions = {
 		silent: cli.silent,
@@ -29,10 +30,35 @@ export const init = () => {
 	}
 
 	if (cli.author) {
+		// $ create --author
 		const options: LogOptions = { ...logOptions, silent: false }
 		log(`Name: ${pc.cyan('Luis Marsiglia')}`, options)
 		log(`GitHub: ${pc.cyan('https://github.com/marsidev')}`, options)
 		log(`Twitter: ${pc.cyan('https://twitter.com/marsigliacr')}`, options)
+		return
+	}
+
+	if (cliOptionKeys.includes('base') && !thereIsFiles) {
+		// $ create --base
+		const cmd = pc.cyan(`${cli.$0} --help`)
+		const expected = pc.cyan('create --base {basePath} file1 file2')
+		warn(
+			`You used "base" option but no filenames were provided\nExpected syntax is ${expected}\nUse the command "${cmd}" for more help`
+		)
+		return
+	}
+
+	if (!thereIsParams && !thereIsFiles) {
+		// $ create
+		const cmd = pc.cyan(`${cli.$0} --help`)
+		warn(`No filenames or parameters were provided. Use the command "${cmd}" for help`)
+		return
+	}
+
+	if (thereIsParams && !cli.base && !thereIsFiles) {
+		// create --invalid
+		const cmd = pc.cyan(`${cli.$0} --help`)
+		warn(`You provided unknown parameters. Use the command "${cmd}" for help`)
 		return
 	}
 

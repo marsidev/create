@@ -9,7 +9,7 @@ import { cleanup, cliOptions as opts, run } from './helpers'
 describe('basic commands', () => {
 	it('should returns expected message when no args are passed', async () => {
 		const { stdout } = await run([])
-		expect(stdout).toContain('No filenames provided.')
+		expect(stdout).toContain('No filenames or parameters were provided.')
 	})
 
 	it.each(opts.author.cmd)(opts.author.desc, async cmd => {
@@ -44,6 +44,16 @@ describe('basic commands', () => {
 		expect(stdout).toContain('Basic usage')
 		expect(stdout).toContain('Creating multiple files')
 		expect(stdout).toContain('Usage with option "base"')
+	})
+
+	it('should returns proper error message when using --base option with no filenames', async () => {
+		const { stdout } = await run(['--base'])
+		expect(stdout).toContain('You used "base" option but no filenames were provided')
+	})
+
+	it('should returns proper error message when using unknown parameter', async () => {
+		const { stdout } = await run(['--invalid'])
+		expect(stdout).toContain('You provided unknown parameters')
 	})
 })
 
