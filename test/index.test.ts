@@ -1,29 +1,10 @@
-import type { SyncOptions } from 'execa'
 import { join, parse } from 'node:path'
-import { readdirSync } from 'node:fs'
 import { randomBytes } from 'crypto'
-import { afterAll, beforeAll, describe, expect, it, test } from 'vitest'
-import { execa } from 'execa'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import pkgJson from '../package.json'
 import { createEmptyFile, dirExists, remove } from '../src/utils/fs'
 import { removeColors } from '../src/utils/log'
-
-const CLI_PATH = join(__dirname, '../dist/index.mjs')
-
-const run = async (args: string[], options: SyncOptions = {}) => {
-	return await execa(`node "${CLI_PATH}" ${args.join(' ')}`, options)
-}
-
-const cleanup = () => {
-	const allFiles = readdirSync(join(__dirname, '..'))
-
-	allFiles.forEach(f => {
-		if (f.startsWith('test-gen__')) {
-			console.log(`Removing ${f}`)
-			remove(f)
-		}
-	})
-}
+import { cleanup, cliOptions as opts, run } from './helpers'
 
 describe('basic commands', () => {
 	it('should returns expected message when no args are passed', async () => {
@@ -31,13 +12,10 @@ describe('basic commands', () => {
 		expect(stdout).toContain('No filenames provided.')
 	})
 
-	test.each([['-a'], ['--author']])(
-		'should returns the author name when executed with %s',
-		async cmd => {
-			const { stdout } = await run([cmd])
-			expect(stdout).toContain('Marsiglia')
-		}
-	)
+	it.each(opts.author.cmd)(opts.author.desc, async cmd => {
+		const { stdout } = await run([cmd])
+		expect(stdout).toContain('Marsiglia')
+	})
 
 	it('should returns color codes by default', async () => {
 		const { stdout } = await run(['--author'])
@@ -49,40 +27,29 @@ describe('basic commands', () => {
 		expect(stdout).not.toContain('\u001b')
 	})
 
-	test.each([['-v'], ['--version']])(
-		'should returns current version when executed with %s',
-		async cmd => {
-			const { stdout } = await run([cmd])
-			expect(stdout).toBe(pkgJson.version)
-		}
-	)
+	it.each(opts.version.cmd)(opts.version.desc, async cmd => {
+		const { stdout } = await run([cmd])
+		expect(stdout).toContain(pkgJson.version)
+	})
 
-	test.each([['-h'], ['--help']])(
-		'should returns the available options when executed with %s',
-		async cmd => {
-			const { stdout } = await run([cmd])
-			expect(stdout).toContain('create <file(s)> [options]')
-			expect(stdout).toContain('-a, --author')
-			expect(stdout).toContain('-b, --base')
-			expect(stdout).toContain('-s, --silent')
-			expect(stdout).toContain('--nocolors')
-			expect(stdout).toContain('-v, --version')
-			expect(stdout).toContain('-h, --help')
-			expect(stdout).toContain('Basic usage')
-			expect(stdout).toContain('Creating multiple files')
-			expect(stdout).toContain('Usage with option "base"')
-		}
-	)
+	it.each(opts.help.cmd)(opts.help.desc, async cmd => {
+		const { stdout } = await run([cmd])
+		expect(stdout).toContain('create <file(s)> [options]')
+		expect(stdout).toContain('-a, --author')
+		expect(stdout).toContain('-b, --base')
+		expect(stdout).toContain('-s, --silent')
+		expect(stdout).toContain('--nocolors')
+		expect(stdout).toContain('-v, --version')
+		expect(stdout).toContain('-h, --help')
+		expect(stdout).toContain('Basic usage')
+		expect(stdout).toContain('Creating multiple files')
+		expect(stdout).toContain('Usage with option "base"')
+	})
 })
 
 describe('creating files', () => {
-	beforeAll(() => {
-		cleanup()
-	})
-
-	afterAll(() => {
-		cleanup()
-	})
+	beforeAll(() => cleanup())
+	afterAll(() => cleanup())
 
 	it('can create a single file', async () => {
 		const files = ['test-gen__index.ts']
@@ -134,37 +101,34 @@ describe('creating files', () => {
 		files.forEach(f => remove(f))
 	})
 
-	it.each([['-b'], ['--base']])(
-		'can create files with %s option',
-		async cmd => {
-			const files = ['Navbar.tsx', 'Footer.tsx']
-			const basePath = 'test-gen__dir/components'
+	it.each(opts.base.cmd)(opts.base.desc, async cmd => {
+		const files = ['Navbar.tsx', 'Footer.tsx']
+		const basePath = 'test-gen__dir/components'
 
-			files.forEach(f => {
-				const p = join(basePath, f)
-				expect(dirExists(p)).toBe(false)
-			})
+		files.forEach(f => {
+			const p = join(basePath, f)
+			expect(dirExists(p)).toBe(false)
+		})
 
-			const { stdout } = await run([...files, cmd, basePath])
+		const { stdout } = await run([...files, cmd, basePath])
 
-			files.forEach(f => {
-				const p = join(basePath, f)
-				expect(dirExists(p)).toBe(true)
-			})
+		files.forEach(f => {
+			const p = join(basePath, f)
+			expect(dirExists(p)).toBe(true)
+		})
 
-			files.forEach(f => {
-				const p = join(basePath, f)
-				const parsed = parse(p)
-				expect(stdout).toContain('File')
-				expect(removeColors(stdout)).toContain(`${parsed.base} created`)
-			})
+		files.forEach(f => {
+			const p = join(basePath, f)
+			const parsed = parse(p)
+			expect(stdout).toContain('File')
+			expect(removeColors(stdout)).toContain(`${parsed.base} created`)
+		})
 
-			files.forEach(f => {
-				const p = join(basePath, f)
-				remove(p)
-			})
-		}
-	)
+		files.forEach(f => {
+			const p = join(basePath, f)
+			remove(p)
+		})
+	})
 
 	it('does not create an already existing file', async () => {
 		const files = ['test-gen__index.ts']
