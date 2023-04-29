@@ -6,7 +6,9 @@ import { error, log, warn } from './log'
 
 const resolved = () => {
 	if (!validNodeVersion()) {
-		error(`You are running Node ${currentVersion}.\nThis package requires Node ${requiredVersion} or higher.\nPlease update your version of Node.`)
+		error(
+			`You are running Node ${currentVersion}.\nThis package requires Node ${requiredVersion} or higher.\nPlease update your version of Node.`
+		)
 		return true
 	}
 
@@ -24,7 +26,7 @@ const resolved = () => {
 		const options: LogOptions = { ...logOptions, silent: false }
 		log(`Name: ${pc.cyan('Luis Marsiglia')}`, options)
 		log(`GitHub: ${pc.cyan('https://github.com/marsidev')}`, options)
-		log(`Twitter: ${pc.cyan('https://twitter.com/marsigliacr')}`, options)
+		log(`Twitter: ${pc.cyan('https://twitter.com/marsidev')}`, options)
 		return true
 	}
 

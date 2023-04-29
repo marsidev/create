@@ -7,7 +7,7 @@
 	<a href="https://www.npmjs.com/package/@marsidev/create"><img src="https://img.shields.io/npm/v/@marsidev/create.svg?style=flat" alt="npm version"></a>
 	<a href="https://packagephobia.com/result?p=@marsidev/create"><img src="https://packagephobia.com/badge?p=@marsidev/create" alt="package size" /></a>
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
-	<a href="https://twitter.com/marsigliacr"><img src="https://img.shields.io/twitter/follow/marsigliacr.svg?style=social" alt="Twitter Follow" /></a>
+	<a href="https://twitter.com/marsidev"><img src="https://img.shields.io/twitter/follow/marsidev.svg?style=social" alt="Twitter Follow" /></a>
 </p>
 
 ## Installation
